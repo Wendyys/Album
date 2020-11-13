@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:background="#9E9E9E"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
+
     <com.facebook.drawee.view.SimpleDraweeView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
         android:id="@+id/image_item"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         fresco:actualImageScaleType="centerCrop"
         fresco:viewAspectRatio="1"
         app:progressBarImage="@mipmap/image_loading"
         fresco:failureImage="@mipmap/image_error" />
-</LinearLayout>
+    <ToggleButton
+        android:id="@+id/image_pick"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:textOff=""
+        android:textOn=""
+        android:layout_gravity="top|right"
+        android:background="@drawable/pick_button_bg"
+        android:layout_width="25dp"
+        android:layout_height="25dp"/>
+</FrameLayout>
