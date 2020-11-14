@@ -19,7 +19,7 @@ class SpaceItemDecoration : RecyclerView.ItemDecoration {
     ) {
         outRect.left = space;
         outRect.bottom = space;
-        if (parent.getChildLayoutPosition(view) % Constants.columns == 0)
+        if (parent.getChildLayoutPosition(view) % Constants.COLUMNS == 0)
             outRect.left = 0
     }
 

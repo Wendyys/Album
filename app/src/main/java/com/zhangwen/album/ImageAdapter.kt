@@ -19,8 +19,12 @@ class ImageAdapter(private val mImageList: ArrayList<String>, private val mConte
 
     override fun onBindViewHolder(holder: ImageAdapter.ViewHolder, position: Int) {
         var image = mImageList[position]
-        //一定要加上schema 要不然图片不显示
-        holder.mImageView.setImageURI(Uri.parse("file://$image"))
+        var tag = holder.mImageView.tag
+        if (tag != image) {
+            holder.mImageView.tag = image
+            //一定要加上前面的schema 要不然图片不显示
+            holder.mImageView.setImageURI(Uri.parse("file://$image"))
+        }
     }
 
     override fun getItemCount(): Int {

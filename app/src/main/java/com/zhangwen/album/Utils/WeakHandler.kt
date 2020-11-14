@@ -1,4 +1,4 @@
-package com.bytedance.common.utility.collection
+package com.zhangwen.album.Utils
 
 import android.os.Handler
 import android.os.Looper
