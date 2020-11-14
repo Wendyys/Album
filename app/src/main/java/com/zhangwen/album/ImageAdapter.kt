@@ -16,7 +16,6 @@ class ImageAdapter(private val mImageList: ArrayList<String>, private val mConte
             LayoutInflater.from(parent.context).inflate(R.layout.image_item, parent, false)
         return ViewHolder(itemView)
     }
-
     override fun onBindViewHolder(holder: ImageAdapter.ViewHolder, position: Int) {
         var image = mImageList[position]
         var tag = holder.mImageView.tag

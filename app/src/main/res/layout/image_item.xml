@@ -12,7 +12,8 @@
         android:layout_height="100dp"
         fresco:actualImageScaleType="centerCrop"
         fresco:viewAspectRatio="1"
-        app:progressBarImage="@mipmap/image_loading"
+        app:placeholderImage="@mipmap/image_loading"
+        fresco:progressBarImage="@mipmap/image_loading"
         fresco:failureImage="@mipmap/image_error" />
     <ToggleButton
         android:id="@+id/image_pick"

@@ -47,9 +47,9 @@ class MainActivity : AlbumView, AppCompatActivity() {
         mImageList = findViewById(R.id.image_list)
         mPhotoList = ArrayList()
         mImageAdapter = ImageAdapter(mPhotoList, this)
+        //mImageAdapter.setHasStableIds(true)
         mImageList.adapter = mImageAdapter
-        var anim = mImageList.itemAnimator as SimpleItemAnimator
-        anim.supportsChangeAnimations = false
+
         mImageList.layoutManager = gridLayoutManager
         mImageList.addItemDecoration(spaceItemDecoration)
     }
@@ -86,10 +86,15 @@ class MainActivity : AlbumView, AppCompatActivity() {
 
     override fun updateAlbumPhoto(photoList: ArrayList<String>) {
         mPhotoList.addAll(photoList)
-        mImageAdapter.notifyItemRangeChanged(0, Constants.PHOTO_BATCH)
-        //使用notifyDataSetChanged在图片数量很多时会导致闪烁
+        mImageAdapter.notifyItemRangeChanged(0, 1)
+
+        /*
+        使用notifyDataSetChanged在图片数量很多时会导致闪烁,有两种方案解决闪烁问题：
+        1. mImageAdapter.setHasStableIds(true)
+        2.使用notifyItemRangeChanged，因为notifyItemRangeChanged和notifyDataSetChanged实现原理不同
+        onBindViewHolder里要给view 加上tag，否则如果采取第二种方案，被局部更新的view也可能会出现闪烁问题
+         */
         //mImageAdapter.notifyDataSetChanged()
-        Log.d(TAG, mPhotoList.size.toString())
     }
 
 }
