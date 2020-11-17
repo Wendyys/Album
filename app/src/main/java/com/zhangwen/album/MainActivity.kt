@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
 import com.hjq.permissions.OnPermission
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
@@ -25,6 +24,7 @@ class MainActivity : AlbumView, AppCompatActivity() {
     private lateinit var albumPresenter: AlbumPresenter
     private lateinit var mPhotoList: ArrayList<String>
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -33,6 +33,10 @@ class MainActivity : AlbumView, AppCompatActivity() {
         init()
         getPermission(this, true, true)
 
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
     override fun onDestroy() {
@@ -86,8 +90,6 @@ class MainActivity : AlbumView, AppCompatActivity() {
 
     override fun updateAlbumPhoto(photoList: ArrayList<String>) {
         mPhotoList.addAll(photoList)
-        mImageAdapter.notifyItemRangeChanged(0, 1)
-
         /*
         使用notifyDataSetChanged在图片数量很多时会导致闪烁,有两种方案解决闪烁问题：
         1. mImageAdapter.setHasStableIds(true)
@@ -95,6 +97,8 @@ class MainActivity : AlbumView, AppCompatActivity() {
         onBindViewHolder里要给view 加上tag，否则如果采取第二种方案，被局部更新的view也可能会出现闪烁问题
          */
         //mImageAdapter.notifyDataSetChanged()
+        mImageAdapter.notifyItemRangeChanged(0, 1)
+
     }
 
 }

@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval"
     android:useLevel="false">
-    <solid android:color="@color/pick_toggle_bg" />
+    <solid android:color="@color/buttonBg" />
     <stroke android:width="1dip" android:color="#ffffff" />
     <size
         android:width="15dp"
