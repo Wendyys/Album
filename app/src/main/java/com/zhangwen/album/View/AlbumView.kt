@@ -1,4 +1,4 @@
-package com.zhangwen.album.view
+package com.zhangwen.album.View
 
 interface AlbumView : BaseView {
     //更新相册图片

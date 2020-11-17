@@ -11,16 +11,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hjq.permissions.OnPermission
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
+import com.zhangwen.album.Adapter.AlbumAdapter
 import com.zhangwen.album.Utils.Constants
 import com.zhangwen.album.Utils.SpaceItemDecoration
-import com.zhangwen.album.presenter.AlbumPresenter
-import com.zhangwen.album.view.AlbumView
+import com.zhangwen.album.Presenter.AlbumPresenter
+import com.zhangwen.album.View.AlbumView
 
 
 class MainActivity : AlbumView, AppCompatActivity() {
     private val TAG: String = "Album"
     private lateinit var mImageList: RecyclerView
-    private lateinit var mImageAdapter: ImageAdapter
+    private lateinit var mAlbumAdapter: AlbumAdapter
     private lateinit var albumPresenter: AlbumPresenter
     private lateinit var mPhotoList: ArrayList<String>
 
@@ -50,9 +51,9 @@ class MainActivity : AlbumView, AppCompatActivity() {
         val spaceItemDecoration: SpaceItemDecoration = SpaceItemDecoration(5)
         mImageList = findViewById(R.id.image_list)
         mPhotoList = ArrayList()
-        mImageAdapter = ImageAdapter(mPhotoList, this)
+        mAlbumAdapter = AlbumAdapter(mPhotoList, this,albumPresenter)
         //mImageAdapter.setHasStableIds(true)
-        mImageList.adapter = mImageAdapter
+        mImageList.adapter = mAlbumAdapter
 
         mImageList.layoutManager = gridLayoutManager
         mImageList.addItemDecoration(spaceItemDecoration)
@@ -97,7 +98,7 @@ class MainActivity : AlbumView, AppCompatActivity() {
         onBindViewHolder里要给view 加上tag，否则如果采取第二种方案，被局部更新的view也可能会出现闪烁问题
          */
         //mImageAdapter.notifyDataSetChanged()
-        mImageAdapter.notifyItemRangeChanged(0, 1)
+        mAlbumAdapter.notifyItemRangeChanged(0, 1)
 
     }
 

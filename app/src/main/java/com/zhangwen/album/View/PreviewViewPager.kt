@@ -1,4 +1,4 @@
-package com.zhangwen.album.view
+package com.zhangwen.album.View
 
 import android.view.View
 import androidx.viewpager.widget.PagerAdapter

@@ -1,7 +1,7 @@
-package com.zhangwen.album.presenter
+package com.zhangwen.album.Presenter
 
-import com.zhangwen.album.view.AlbumView
-import com.zhangwen.album.view.BaseView
+import com.zhangwen.album.View.AlbumView
+import com.zhangwen.album.View.BaseView
 
 abstract class BasePresenter<T : BaseView> {
     open var mView: AlbumView? = null

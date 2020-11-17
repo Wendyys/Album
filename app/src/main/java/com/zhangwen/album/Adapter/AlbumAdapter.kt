@@ -1,22 +1,25 @@
-package com.zhangwen.album
+package com.zhangwen.album.Adapter
 
 import android.content.Context
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ToggleButton
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
+import com.zhangwen.album.OnItemClickListener
+import com.zhangwen.album.R
 
-class ImageAdapter(private val mImageList: ArrayList<String>, private val mContext: Context) :
-    RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
+class AlbumAdapter(private val mImageList: ArrayList<String>, private val mContext: Context,private val onItemClickListener: OnItemClickListener) :
+    RecyclerView.Adapter<AlbumAdapter.ViewHolder>(){
     private val TAG: String = "Album"
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.image_item, parent, false)
         return ViewHolder(itemView)
     }
-    override fun onBindViewHolder(holder: ImageAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var image = mImageList[position]
         var tag = holder.mImageView.tag
         if (tag != image) {
@@ -32,6 +35,15 @@ class ImageAdapter(private val mImageList: ArrayList<String>, private val mConte
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var mImageView: SimpleDraweeView = itemView.findViewById(R.id.image_item)
+        var mPickButton :ToggleButton = itemView.findViewById(R.id.image_pick)
+        init {
+            mImageView.setOnClickListener(View.OnClickListener {
+                onItemClickListener?.onPhotoClick(it,adapterPosition)
+            })
+            mPickButton.setOnClickListener(View.OnClickListener {
+                onItemClickListener?.onToggleClick(it,adapterPosition)
+            })
+        }
 
     }
 

@@ -1,13 +1,15 @@
-package com.zhangwen.album.presenter
+package com.zhangwen.album.Presenter
 
 import android.content.Context
 import android.os.Message
+import android.view.View
 import android.widget.Toast
+import com.zhangwen.album.OnItemClickListener
 import com.zhangwen.album.Utils.ImageLoader
 import com.zhangwen.album.Utils.WeakHandler
-import com.zhangwen.album.view.AlbumView
+import com.zhangwen.album.View.AlbumView
 
-class AlbumPresenter(var context: Context) : BasePresenter<AlbumView>(), WeakHandler.IHandler {
+class AlbumPresenter(var context: Context) : BasePresenter<AlbumView>(), WeakHandler.IHandler ,OnItemClickListener{
     private val handler: WeakHandler = WeakHandler(this)
     override fun handleMsg(msg: Message?) {
         when (msg?.what) {
@@ -26,6 +28,14 @@ class AlbumPresenter(var context: Context) : BasePresenter<AlbumView>(), WeakHan
     fun getPhotoList() {
         val imageLoader: ImageLoader = ImageLoader(context.contentResolver, handler)
         var photoList = imageLoader.getImageList()
+    }
+
+    override fun onPhotoClick(view: View, pos: Int) {
+        Toast.makeText(context,"点击了"+pos+"的照片",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onToggleClick(view: View, pos: Int) {
+        Toast.makeText(context,"点击了"+pos+"的按钮",Toast.LENGTH_SHORT).show()
     }
 
 }
