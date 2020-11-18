@@ -12,7 +12,8 @@ import com.zhangwen.album.Utils.ImageLoader
 import com.zhangwen.album.Utils.WeakHandler
 import com.zhangwen.album.View.AlbumView
 
-class AlbumPresenter(var context: Context) : BasePresenter<AlbumView>(), WeakHandler.IHandler,
+class AlbumPresenter(var context: Context, var imageList: ArrayList<PhotoBean>) :
+    BasePresenter<AlbumView>(), WeakHandler.IHandler,
     OnItemClickListener {
     private val handler: WeakHandler = WeakHandler(this)
     override fun handleMsg(msg: Message?) {
@@ -20,7 +21,11 @@ class AlbumPresenter(var context: Context) : BasePresenter<AlbumView>(), WeakHan
             1 -> {
                 var photoList = msg.obj as ArrayList<String>
                 if (photoList.size > 0) {
-                    mView?.updateAlbumPhoto(photoList)
+                    for (i in 0 until photoList.size) {
+                        var photoBean = PhotoBean(imageList.size + i, photoList[i], -1)
+                        imageList.add(photoBean)
+                    }
+                    mView?.updateAlbumPhoto()
                 } else {
                     Toast.makeText(context, "没有图片", Toast.LENGTH_SHORT).show()
                 }
@@ -39,13 +44,21 @@ class AlbumPresenter(var context: Context) : BasePresenter<AlbumView>(), WeakHan
     }
 
     override fun onToggleClick(view: View, pos: Int, uri: String, checked: Boolean) {
-        var selected: PhotoBean = PhotoBean(pos, uri)
-        if(checked){
+        var index = PhotoSelectedList.size() + 1
+        var selected: PhotoBean = PhotoBean(pos, uri, index)
+        if (checked) {
             PhotoSelectedList.add(selected)
             val toggle = view as ToggleButton
-            toggle.text = PhotoSelectedList.size().toString()
-        }else{
+            toggle.text = index.toString()
+            imageList[pos].index = index
+        } else {
             PhotoSelectedList.delete(selected)
+            imageList[pos].index = -1
+            //更新列表值
+            var size = PhotoSelectedList.size()
+            for(i in 0 until size){
+                imageList[PhotoSelectedList.get(i).position].index = PhotoSelectedList.get(i).index
+            }
         }
         mView?.updatePreviewNumber()
     }

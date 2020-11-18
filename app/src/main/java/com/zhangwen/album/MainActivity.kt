@@ -14,12 +14,12 @@ import com.hjq.permissions.OnPermission
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.zhangwen.album.Adapter.AlbumAdapter
+import com.zhangwen.album.Bean.PhotoBean
 import com.zhangwen.album.Bean.PhotoSelectedList
 import com.zhangwen.album.Utils.Constants
 import com.zhangwen.album.Utils.SpaceItemDecoration
 import com.zhangwen.album.Presenter.AlbumPresenter
 import com.zhangwen.album.View.AlbumView
-import kotlin.properties.Delegates
 
 
 class MainActivity : AlbumView, AppCompatActivity() {
@@ -27,14 +27,15 @@ class MainActivity : AlbumView, AppCompatActivity() {
     private lateinit var mImageList: RecyclerView
     private lateinit var mAlbumAdapter: AlbumAdapter
     private lateinit var mAlbumPresenter: AlbumPresenter
-    private lateinit var mPhotoList: ArrayList<String>
+    private lateinit var mPhotoList: ArrayList<PhotoBean>
     private lateinit var mPreviewCount:TextView
     private lateinit var mPreview:TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        mAlbumPresenter = AlbumPresenter(this)
+        mPhotoList = ArrayList()
+        mAlbumPresenter = AlbumPresenter(this,mPhotoList)
         mAlbumPresenter.attach(this)
         init()
         getPermission(this, true, true)
@@ -55,7 +56,6 @@ class MainActivity : AlbumView, AppCompatActivity() {
             GridLayoutManager(this, Constants.COLUMNS, GridLayoutManager.VERTICAL, false)
         val spaceItemDecoration: SpaceItemDecoration = SpaceItemDecoration(5)
         mImageList = findViewById(R.id.image_list)
-        mPhotoList = ArrayList()
         mAlbumAdapter = AlbumAdapter(mPhotoList, this,mAlbumPresenter)
         mImageList.adapter = mAlbumAdapter
         mImageList.layoutManager = gridLayoutManager
@@ -96,9 +96,8 @@ class MainActivity : AlbumView, AppCompatActivity() {
         }
     }
 
-    override fun updateAlbumPhoto(photoList: ArrayList<String>) {
-        mPhotoList.addAll(photoList)
-        //mImageAdapter.notifyDataSetChanged()
+    override fun updateAlbumPhoto() {
+
         mAlbumAdapter.notifyItemRangeChanged(0, 1)
 
     }
@@ -108,6 +107,10 @@ class MainActivity : AlbumView, AppCompatActivity() {
             mPreviewCount.visibility = View.VISIBLE
             mPreviewCount.text = "(${PhotoSelectedList.size()})"
             mPreview.alpha = Constants.ENABLE_ALPHA
+            //更新图片的数字序号
+            for(i in 0 until PhotoSelectedList.size()){
+                mAlbumAdapter.notifyItemChanged(PhotoSelectedList.selectedList[i].position)
+            }
         }else{
             mPreviewCount.visibility = View.INVISIBLE
             mPreview.alpha = Constants.DISABLE_ALPHA

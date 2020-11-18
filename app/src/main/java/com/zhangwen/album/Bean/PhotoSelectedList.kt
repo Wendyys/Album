@@ -6,14 +6,9 @@ import kotlin.collections.HashMap
 
 object PhotoSelectedList {
     var selectedList = LinkedList<PhotoBean>()
-    var pos2indexMap = HashMap<Int, Int>()
-    var index2posMap = HashMap<Int, Int>()
+
     fun add(photoBean: PhotoBean) {
         selectedList.add(photoBean)
-        //更新pos-index映射表,二者键值对相反
-        pos2indexMap[photoBean.position] = selectedList.size
-        index2posMap[selectedList.size] = photoBean.position
-
     }
 
     fun delete(photoBean: PhotoBean) {
@@ -26,17 +21,14 @@ object PhotoSelectedList {
             ) {
                 selectedList.removeAt(i)
                 //更新一下序号
-                updateMap(photoBean.position)
+                updateMap()
                 break;
             }
         }
 
     }
-
-    //返回传入postion对应的index。返回值null即为未选中状态
-    fun getCurIndex(pos: Int): Int? {
-        return pos2indexMap[pos]
-
+    fun get(pos:Int): PhotoBean {
+        return selectedList[pos]
     }
 
     fun getAll(): ArrayList<PhotoBean> {
@@ -48,22 +40,11 @@ object PhotoSelectedList {
         return arr
     }
 
-    private fun updateMap(pos: Int) {
-        //获取要删除的index值
-        var index = pos2indexMap[pos] as Int
-        pos2indexMap.remove(pos)
-        index2posMap.remove(index)
-        index += 1
-        if (index != null) {
-            for (i in index..selectedList.size) {
-                val pos = index2posMap[i] as Int
-                val t = pos2indexMap[pos] as Int
-                pos2indexMap[pos] = t - 1
-
-            }
+    private fun updateMap() {
+        //由于selectedList是个链表结构，因此将index重置为在当前列表中的顺序
+        for(i in 0 until selectedList.size) {
+            selectedList[i].index = i+1
         }
-
-
     }
 
     fun size(): Int {
@@ -71,4 +52,8 @@ object PhotoSelectedList {
     }
 }
 
-class PhotoBean(var position: Int, var uri: String)
+/**
+ * position:在列表中的位置
+ * index:在选中的list中的位置
+ */
+class PhotoBean(var position: Int, var uri: String, var index: Int)
