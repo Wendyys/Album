@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -12,25 +14,28 @@ import com.hjq.permissions.OnPermission
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.zhangwen.album.Adapter.AlbumAdapter
+import com.zhangwen.album.Bean.PhotoSelectedList
 import com.zhangwen.album.Utils.Constants
 import com.zhangwen.album.Utils.SpaceItemDecoration
 import com.zhangwen.album.Presenter.AlbumPresenter
 import com.zhangwen.album.View.AlbumView
+import kotlin.properties.Delegates
 
 
 class MainActivity : AlbumView, AppCompatActivity() {
     private val TAG: String = "Album"
     private lateinit var mImageList: RecyclerView
     private lateinit var mAlbumAdapter: AlbumAdapter
-    private lateinit var albumPresenter: AlbumPresenter
+    private lateinit var mAlbumPresenter: AlbumPresenter
     private lateinit var mPhotoList: ArrayList<String>
-
+    private lateinit var mPreviewCount:TextView
+    private lateinit var mPreview:TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        albumPresenter = AlbumPresenter(this)
-        albumPresenter.attach(this)
+        mAlbumPresenter = AlbumPresenter(this)
+        mAlbumPresenter.attach(this)
         init()
         getPermission(this, true, true)
 
@@ -42,7 +47,7 @@ class MainActivity : AlbumView, AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        albumPresenter.detach()
+        mAlbumPresenter.detach()
     }
 
     private fun init() {
@@ -51,12 +56,14 @@ class MainActivity : AlbumView, AppCompatActivity() {
         val spaceItemDecoration: SpaceItemDecoration = SpaceItemDecoration(5)
         mImageList = findViewById(R.id.image_list)
         mPhotoList = ArrayList()
-        mAlbumAdapter = AlbumAdapter(mPhotoList, this,albumPresenter)
-        //mImageAdapter.setHasStableIds(true)
+        mAlbumAdapter = AlbumAdapter(mPhotoList, this,mAlbumPresenter)
         mImageList.adapter = mAlbumAdapter
-
         mImageList.layoutManager = gridLayoutManager
         mImageList.addItemDecoration(spaceItemDecoration)
+
+        mPreviewCount = findViewById(R.id.tv_choose_count)
+        mPreview = findViewById(R.id.tv_preview)
+        mPreview.alpha = Constants.DISABLE_ALPHA
     }
 
     //申请权限
@@ -80,7 +87,7 @@ class MainActivity : AlbumView, AppCompatActivity() {
 
                 override fun hasPermission(granted: List<String?>?, isAll: Boolean) {
                     if (isAll) {
-                        albumPresenter.getPhotoList()
+                        mAlbumPresenter.getPhotoList()
                     } else {
                         Toast.makeText(this@MainActivity, "部分权限获取失败", Toast.LENGTH_SHORT).show()
                     }
@@ -91,14 +98,20 @@ class MainActivity : AlbumView, AppCompatActivity() {
 
     override fun updateAlbumPhoto(photoList: ArrayList<String>) {
         mPhotoList.addAll(photoList)
-        /*
-        使用notifyDataSetChanged在图片数量很多时会导致闪烁,有两种方案解决闪烁问题：
-        1. mImageAdapter.setHasStableIds(true)
-        2.使用notifyItemRangeChanged，因为notifyItemRangeChanged和notifyDataSetChanged实现原理不同
-        onBindViewHolder里要给view 加上tag，否则如果采取第二种方案，被局部更新的view也可能会出现闪烁问题
-         */
         //mImageAdapter.notifyDataSetChanged()
         mAlbumAdapter.notifyItemRangeChanged(0, 1)
+
+    }
+
+    override fun updatePreviewNumber() {
+        if(PhotoSelectedList.size() > 0){
+            mPreviewCount.visibility = View.VISIBLE
+            mPreviewCount.text = "(${PhotoSelectedList.size()})"
+            mPreview.alpha = Constants.ENABLE_ALPHA
+        }else{
+            mPreviewCount.visibility = View.INVISIBLE
+            mPreview.alpha = Constants.DISABLE_ALPHA
+        }
 
     }
 
