@@ -5,4 +5,5 @@ object Constants {
     const val PHOTO_BATCH = 20
     const val DISABLE_ALPHA = 0.4f
     const val ENABLE_ALPHA = 1F
+    const val PAYLOAD_TOGGLE = "toggle"
 }

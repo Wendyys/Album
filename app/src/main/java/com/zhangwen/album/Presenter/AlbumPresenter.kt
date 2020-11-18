@@ -36,14 +36,14 @@ class AlbumPresenter(var context: Context, var imageList: ArrayList<PhotoBean>) 
     //获取照片列表
     fun getPhotoList() {
         val imageLoader: ImageLoader = ImageLoader(context.contentResolver, handler)
-        var photoList = imageLoader.getImageList()
+        imageLoader.getImageList()
     }
 
     override fun onPhotoClick(view: View, pos: Int, uri: String) {
         Toast.makeText(context, "点击了" + pos + "的照片", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onToggleClick(view: View, pos: Int, uri: String, checked: Boolean) {
+    override fun onToggleClick(view: View ,pos: Int, uri: String, checked: Boolean) {
         var index = PhotoSelectedList.size() + 1
         var selected: PhotoBean = PhotoBean(pos, uri, index)
         if (checked) {
@@ -56,11 +56,12 @@ class AlbumPresenter(var context: Context, var imageList: ArrayList<PhotoBean>) 
             imageList[pos].index = -1
             //更新列表值
             var size = PhotoSelectedList.size()
-            for(i in 0 until size){
+            for (i in 0 until size) {
                 imageList[PhotoSelectedList.get(i).position].index = PhotoSelectedList.get(i).index
             }
         }
         mView?.updatePreviewNumber()
+
     }
 
 }

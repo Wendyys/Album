@@ -9,7 +9,6 @@ import android.widget.ToggleButton
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.zhangwen.album.Bean.PhotoBean
-import com.zhangwen.album.Bean.PhotoSelectedList
 import com.zhangwen.album.OnItemClickListener
 import com.zhangwen.album.R
 
@@ -26,13 +25,16 @@ class AlbumAdapter(
         return ViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var imageUri = mImageList[position].uri
-        var tag = holder.mImageView.tag
-        if (tag != imageUri) {
-            holder.mImageView.tag = imageUri
-            //一定要加上前面的schema 要不然图片不显示
-            holder.mImageView.setImageURI(Uri.parse("file://$imageUri"))
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
+        //使用payload属性防止toggle状态切换时图片刷新
+        if (payloads.isEmpty()) {
+            var imageUri = mImageList[position].uri
+            var tag = holder.mImageView.tag
+            if (tag != imageUri) {
+                holder.mImageView.tag = imageUri
+                //一定要加上前面的schema 要不然图片不显示
+                holder.mImageView.setImageURI(Uri.parse("file://$imageUri"))
+            }
         }
         var imageIndex = mImageList[position].index
         if (imageIndex != -1) {
@@ -44,6 +46,7 @@ class AlbumAdapter(
         }
 
     }
+
 
     override fun getItemCount(): Int {
         return mImageList.size
@@ -71,6 +74,10 @@ class AlbumAdapter(
             })
         }
 
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        //
     }
 
 }

@@ -109,7 +109,7 @@ class MainActivity : AlbumView, AppCompatActivity() {
             mPreview.alpha = Constants.ENABLE_ALPHA
             //更新图片的数字序号
             for(i in 0 until PhotoSelectedList.size()){
-                mAlbumAdapter.notifyItemChanged(PhotoSelectedList.selectedList[i].position)
+                mAlbumAdapter.notifyItemChanged(PhotoSelectedList.selectedList[i].position,Constants.PAYLOAD_TOGGLE)
             }
         }else{
             mPreviewCount.visibility = View.INVISIBLE
