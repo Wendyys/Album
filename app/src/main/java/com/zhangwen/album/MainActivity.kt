@@ -98,7 +98,7 @@ class MainActivity : AlbumView, AppCompatActivity() {
 
     override fun updateAlbumPhoto() {
 
-        mAlbumAdapter.notifyItemRangeChanged(0, 1)
+        mAlbumAdapter.notifyItemRangeChanged(0, 1,Constants.PAYLOAD_TOGGLE)
 
     }
 
