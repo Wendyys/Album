@@ -1,7 +1,5 @@
 package com.zhangwen.album.View
 
-import com.zhangwen.album.Bean.PhotoBean
-
 interface AlbumView : BaseView {
     //更新相册图片
     fun updateAlbumPhoto()

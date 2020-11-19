@@ -2,7 +2,6 @@ package com.zhangwen.album.Bean
 
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 object PhotoSelectedList {
     var selectedList = LinkedList<PhotoBean>()
@@ -12,7 +11,7 @@ object PhotoSelectedList {
     }
 
     fun delete(photoBean: PhotoBean) {
-        //不可直接调用，删除操作会失败，猜测remove方法在匹配时是比较对象的哈希值？
+        //不可直接调用remove方法，删除操作会失败，猜测remove方法在匹配时是比较对象的哈希值？
         //selectedList.remove(photoBean)
         var size = selectedList.size
         for (i in 0 until size) {
@@ -40,6 +39,9 @@ object PhotoSelectedList {
         return arr
     }
 
+    fun clear(){
+        selectedList.clear()
+    }
     private fun updateMap() {
         //由于selectedList是个链表结构，因此将index重置为在当前列表中的顺序
         for(i in 0 until selectedList.size) {
@@ -52,8 +54,3 @@ object PhotoSelectedList {
     }
 }
 
-/**
- * position:在列表中的位置
- * index:在选中的list中的位置
- */
-class PhotoBean(var position: Int, var uri: String, var index: Int)

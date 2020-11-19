@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.ToggleButton
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
-import com.zhangwen.album.Bean.PhotoBean
 import com.zhangwen.album.OnItemClickListener
 import com.zhangwen.album.R
+import com.zhangwen.album.Bean.PhotoBean
 
 class AlbumAdapter(
     private val mImageList: ArrayList<PhotoBean>,

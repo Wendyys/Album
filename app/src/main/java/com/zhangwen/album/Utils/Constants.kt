@@ -6,4 +6,7 @@ object Constants {
     const val DISABLE_ALPHA = 0.4f
     const val ENABLE_ALPHA = 1F
     const val PAYLOAD_TOGGLE = "toggle"
+    const val SOURCE = "source"
+    const val PREVIEW_BUTTON = "preview_button"
+    const val PREVIEW_PHOTO = "preview_photo"
 }

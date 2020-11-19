@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/background_dark"
-    tools:context=".PreviewFragment">
+    tools:context=".Activity.PreviewActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,7 +33,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="1/116"
+                android:text="1"
+                android:textColor="#ffffff"
+                android:textSize="20dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="/"
+                android:textColor="#ffffff"
+                android:textSize="20dp" />
+            <TextView
+                android:id="@+id/preview_total_number"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="116"
                 android:textColor="#ffffff"
                 android:textSize="20dp" />
 
@@ -102,6 +117,7 @@
                 android:textOn="" />
 
             <TextView
+                android:id="@+id/btn_pick"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
