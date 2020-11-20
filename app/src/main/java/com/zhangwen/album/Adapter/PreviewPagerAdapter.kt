@@ -16,7 +16,6 @@ class PreviewPagerAdapter(var mContext: Context, var mList: ArrayList<PhotoBean>
     PagerAdapter() {
      val TAG = "PreviewPagerAdapter"
     override fun getCount(): Int {
-        Log.d(TAG,mList.size.toString())
         return mList.size
     }
 
@@ -26,7 +25,7 @@ class PreviewPagerAdapter(var mContext: Context, var mList: ArrayList<PhotoBean>
         var view = LayoutInflater.from(mContext).inflate(R.layout.viewpager_item, container,false)
         var simpleDraweeView = view.findViewById<SimpleDraweeView>(R.id.preview_image_item)
         simpleDraweeView.setImageURI(Uri.parse("file://$uri"))
-        container.addView(simpleDraweeView)
+        container.addView(view)
         return view
     }
 
