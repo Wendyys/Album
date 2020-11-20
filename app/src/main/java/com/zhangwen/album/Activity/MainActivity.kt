@@ -15,11 +15,11 @@ import com.hjq.permissions.OnPermission
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.zhangwen.album.Adapter.AlbumAdapter
-import com.zhangwen.album.Utils.Constants
-import com.zhangwen.album.Utils.SpaceItemDecoration
+import com.zhangwen.album.Bean.PhotoManager
 import com.zhangwen.album.Presenter.AlbumPresenter
 import com.zhangwen.album.R
-import com.zhangwen.album.Bean.PhotoManager
+import com.zhangwen.album.Utils.Constants
+import com.zhangwen.album.Utils.SpaceItemDecoration
 import com.zhangwen.album.View.AlbumView
 
 
@@ -28,8 +28,8 @@ class MainActivity : AlbumView, AppCompatActivity() {
     private lateinit var mImageList: RecyclerView
     private lateinit var mAlbumAdapter: AlbumAdapter
     private lateinit var mAlbumPresenter: AlbumPresenter
-    private lateinit var mPreviewCount:TextView
-    private lateinit var mPreview:TextView
+    private lateinit var mPreviewCount: TextView
+    private lateinit var mPreview: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,14 +43,12 @@ class MainActivity : AlbumView, AppCompatActivity() {
     }
 
 
-
-
     private fun init() {
         val gridLayoutManager: GridLayoutManager =
             GridLayoutManager(this, Constants.COLUMNS, GridLayoutManager.VERTICAL, false)
         val spaceItemDecoration: SpaceItemDecoration = SpaceItemDecoration(5)
         mImageList = findViewById(R.id.image_list)
-        mAlbumAdapter = AlbumAdapter(PhotoManager.photoList, this,mAlbumPresenter)
+        mAlbumAdapter = AlbumAdapter(PhotoManager.photoList, this, mAlbumPresenter)
         mImageList.adapter = mAlbumAdapter
         mImageList.layoutManager = gridLayoutManager
         mImageList.addItemDecoration(spaceItemDecoration)
@@ -58,19 +56,20 @@ class MainActivity : AlbumView, AppCompatActivity() {
         mPreview = findViewById(R.id.tv_preview)
         mPreview.alpha = Constants.DISABLE_ALPHA
         mPreview.setOnClickListener(View.OnClickListener {
-           jump2preview(Constants.PREVIEW_BUTTON)
+            jump2preview(Constants.PREVIEW_BUTTON)
         })
     }
 
-    private fun jump2preview(source:String?){
-        var intent = Intent(this,PreviewActivity::class.java)
-        if(source != null){
+    private fun jump2preview(source: String?) {
+        var intent = Intent(this, PreviewActivity::class.java)
+        if (source != null) {
             var bundle = Bundle()
-            bundle.putString(Constants.SOURCE,source)
-            intent.putExtra(Constants.SOURCE,bundle)
+            bundle.putString(Constants.SOURCE, source)
+            intent.putExtra(Constants.SOURCE, bundle)
         }
-        startActivityForResult(intent,666)
+        startActivityForResult(intent, 666)
     }
+
     //申请权限
     private fun getPermission(context: Context, isAsk: Boolean, isHandOpen: Boolean) {
         if (!isAsk) return
@@ -103,20 +102,23 @@ class MainActivity : AlbumView, AppCompatActivity() {
 
     override fun updateAlbumPhoto() {
 
-        mAlbumAdapter.notifyItemRangeChanged(0, 1,Constants.PAYLOAD_TOGGLE)
+        mAlbumAdapter.notifyItemRangeChanged(0, 1, Constants.PAYLOAD_TOGGLE)
 
     }
 
     override fun updatePreviewNumber() {
-        if(PhotoManager.photoSelectedList.size() > 0){
+        if (PhotoManager.photoSelectedList.size() > 0) {
             mPreviewCount.visibility = View.VISIBLE
             mPreviewCount.text = "(${PhotoManager.photoSelectedList.size()})"
             mPreview.alpha = Constants.ENABLE_ALPHA
             //更新图片的数字序号
-            for(i in 0 until PhotoManager.photoSelectedList.size()){
-                mAlbumAdapter.notifyItemChanged(PhotoManager.photoSelectedList.selectedList[i].position,Constants.PAYLOAD_TOGGLE)
+            for (i in 0 until PhotoManager.photoSelectedList.size()) {
+                mAlbumAdapter.notifyItemChanged(
+                    PhotoManager.photoSelectedList.selectedList[i].position,
+                    Constants.PAYLOAD_TOGGLE
+                )
             }
-        }else{
+        } else {
             mPreviewCount.visibility = View.INVISIBLE
             mPreview.alpha = Constants.DISABLE_ALPHA
         }
@@ -126,19 +128,20 @@ class MainActivity : AlbumView, AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
     }
+
     override fun onResume() {
         super.onResume()
-        Log.d(TAG,"MainActivity.onResume")
+        Log.d(TAG, "MainActivity.onResume")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d(TAG,"MainActivity.onStop")
+        Log.d(TAG, "MainActivity.onStop")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d(TAG,"MainActivity.onDestory")
+        Log.d(TAG, "MainActivity.onDestory")
         mAlbumPresenter.detach()
         PhotoManager.release()
     }

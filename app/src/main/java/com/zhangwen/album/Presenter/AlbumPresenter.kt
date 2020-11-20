@@ -5,10 +5,10 @@ import android.os.Message
 import android.view.View
 import android.widget.Toast
 import android.widget.ToggleButton
-import com.zhangwen.album.OnItemClickListener
-import com.zhangwen.album.Utils.ImageLoader
 import com.zhangwen.album.Bean.PhotoBean
 import com.zhangwen.album.Bean.PhotoManager
+import com.zhangwen.album.OnItemClickListener
+import com.zhangwen.album.Utils.ImageLoader
 import com.zhangwen.album.Utils.WeakHandler
 import com.zhangwen.album.View.AlbumView
 
@@ -43,7 +43,7 @@ class AlbumPresenter(var context: Context, var imageList: ArrayList<PhotoBean>) 
         Toast.makeText(context, "点击了" + pos + "的照片", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onToggleClick(view: View ,pos: Int, uri: String, checked: Boolean) {
+    override fun onToggleClick(view: View, pos: Int, uri: String, checked: Boolean) {
         var index = PhotoManager.photoSelectedList.size() + 1
         var selected: PhotoBean = PhotoBean(pos, uri, index)
         if (checked) {
@@ -57,7 +57,8 @@ class AlbumPresenter(var context: Context, var imageList: ArrayList<PhotoBean>) 
             //更新列表值
             var size = PhotoManager.photoSelectedList.size()
             for (i in 0 until size) {
-                imageList[PhotoManager.photoSelectedList.get(i).position].index = PhotoManager.photoSelectedList.get(i).index
+                imageList[PhotoManager.photoSelectedList.get(i).position].index =
+                    PhotoManager.photoSelectedList.get(i).index
             }
         }
         mView?.updatePreviewNumber()

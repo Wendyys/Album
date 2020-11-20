@@ -26,7 +26,8 @@ object PhotoSelectedList {
         }
 
     }
-    fun get(pos:Int): PhotoBean {
+
+    fun get(pos: Int): PhotoBean {
         return selectedList[pos]
     }
 
@@ -39,13 +40,14 @@ object PhotoSelectedList {
         return arr
     }
 
-    fun clear(){
+    fun clear() {
         selectedList.clear()
     }
+
     private fun updateMap() {
         //由于selectedList是个链表结构，因此将index重置为在当前列表中的顺序
-        for(i in 0 until selectedList.size) {
-            selectedList[i].index = i+1
+        for (i in 0 until selectedList.size) {
+            selectedList[i].index = i + 1
         }
     }
 
