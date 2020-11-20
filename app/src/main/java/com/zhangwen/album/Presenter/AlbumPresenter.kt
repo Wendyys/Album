@@ -1,13 +1,18 @@
 package com.zhangwen.album.Presenter
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.os.Message
 import android.view.View
 import android.widget.Toast
 import android.widget.ToggleButton
+import com.zhangwen.album.Activity.PreviewActivity
 import com.zhangwen.album.Bean.PhotoBean
 import com.zhangwen.album.Bean.PhotoManager
 import com.zhangwen.album.OnItemClickListener
+import com.zhangwen.album.Utils.Constants
 import com.zhangwen.album.Utils.ImageLoader
 import com.zhangwen.album.Utils.WeakHandler
 import com.zhangwen.album.View.AlbumView
@@ -39,8 +44,22 @@ class AlbumPresenter(var context: Context, var imageList: ArrayList<PhotoBean>) 
         imageLoader.getImageList()
     }
 
+    //处理点击事件
+    fun jump2preview(activity: Activity, source: String?, current: Int?) {
+        var intent = Intent(activity, PreviewActivity::class.java)
+        if (source != null) {
+            var bundle = Bundle()
+            bundle.putString(Constants.SOURCE, source)
+            current?.let { bundle.putInt(Constants.CURRENT_PAGE, it) }
+            intent.putExtra(Constants.SOURCE, bundle)
+
+        }
+        activity.startActivityForResult(intent, 666)
+    }
+
+
     override fun onPhotoClick(view: View, pos: Int, uri: String) {
-        Toast.makeText(context, "点击了" + pos + "的照片", Toast.LENGTH_SHORT).show()
+        jump2preview(context as Activity, Constants.SOURCE_PREVIEW_PHOTO, pos)
     }
 
     override fun onToggleClick(view: View, pos: Int, uri: String, checked: Boolean) {

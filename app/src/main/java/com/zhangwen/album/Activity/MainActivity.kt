@@ -56,19 +56,10 @@ class MainActivity : AlbumView, AppCompatActivity() {
         mPreview = findViewById(R.id.tv_preview)
         mPreview.alpha = Constants.DISABLE_ALPHA
         mPreview.setOnClickListener(View.OnClickListener {
-            jump2preview(Constants.PREVIEW_BUTTON)
+            mAlbumPresenter.jump2preview(this, Constants.SOURCE_PREVIEW_BUTTON, null)
         })
     }
 
-    private fun jump2preview(source: String?) {
-        var intent = Intent(this, PreviewActivity::class.java)
-        if (source != null) {
-            var bundle = Bundle()
-            bundle.putString(Constants.SOURCE, source)
-            intent.putExtra(Constants.SOURCE, bundle)
-        }
-        startActivityForResult(intent, 666)
-    }
 
     //申请权限
     private fun getPermission(context: Context, isAsk: Boolean, isHandOpen: Boolean) {
@@ -101,7 +92,6 @@ class MainActivity : AlbumView, AppCompatActivity() {
     }
 
     override fun updateAlbumPhoto() {
-
         mAlbumAdapter.notifyItemRangeChanged(0, 1, Constants.PAYLOAD_TOGGLE)
 
     }
@@ -140,8 +130,8 @@ class MainActivity : AlbumView, AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         Log.d(TAG, "MainActivity.onDestory")
+        super.onDestroy()
         mAlbumPresenter.detach()
         PhotoManager.release()
     }

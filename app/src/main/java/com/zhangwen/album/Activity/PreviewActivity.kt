@@ -25,14 +25,14 @@ class PreviewActivity : AppCompatActivity(), PreviewView {
     private lateinit var mBtnPick: TextView
 
     private lateinit var SOURCE: String
-
+    private var mCurrentPage: Int? = null
+    private var TAG = "PreviewActivity"
     private lateinit var mPreviewPresenter: PreviewPresenter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_preview)
         getExtra()
         initView()
-
         initData()
     }
 
@@ -40,6 +40,9 @@ class PreviewActivity : AppCompatActivity(), PreviewView {
         var bundle = intent.getBundleExtra(Constants.SOURCE)
         if (bundle != null) {
             SOURCE = bundle.get(Constants.SOURCE) as String
+            if (SOURCE == Constants.SOURCE_PREVIEW_PHOTO) {
+                mCurrentPage = bundle.get(Constants.CURRENT_PAGE) as Int?
+            }
         }
     }
 
@@ -51,31 +54,45 @@ class PreviewActivity : AppCompatActivity(), PreviewView {
         mViewPager = findViewById(R.id.viewpager)
         mTogglePick = findViewById(R.id.togglebtn_choose)
         mBtnPick = findViewById(R.id.btn_pick)
-        if (SOURCE == Constants.PREVIEW_BUTTON) {
-            mPreviewPresenter = PreviewPresenter(this, PhotoManager.photoSelectedList.getAll())
+        if (SOURCE == Constants.SOURCE_PREVIEW_BUTTON) {
             mPreviewPagerAdapter =
                 PreviewPagerAdapter(this, PhotoManager.photoSelectedList.getAll(), SOURCE)
+            mPreviewPresenter =
+                PreviewPresenter(this, PhotoManager.photoSelectedList.getAll(), mViewPager, SOURCE)
         } else {
-            mPreviewPresenter = PreviewPresenter(this, PhotoManager.photoList)
             mPreviewPagerAdapter = PreviewPagerAdapter(this, PhotoManager.photoList, SOURCE)
+            mPreviewPresenter = PreviewPresenter(this, PhotoManager.photoList, mViewPager, SOURCE)
         }
         mViewPager.adapter = mPreviewPagerAdapter
+        mCurrentPage?.let { mViewPager.setCurrentItem(it, true) }
         mPreviewPresenter.attach(this)
+
     }
 
     private fun initData() {
-        if (SOURCE == Constants.PREVIEW_BUTTON) {
+        if (SOURCE == Constants.SOURCE_PREVIEW_BUTTON) {
             //从预览按钮跳转，viewpager数据集设为PhotoManger.photoSelectedList
             mTvTotal.text = PhotoManager.photoSelectedList.size().toString()
+            mTvCurrent.text = "1"
         } else {
             //从照片跳转，viewpager数据集设为全部照片
-
+            mTvTotal.text = PhotoManager.photoList.size.toString()
+            mTvCurrent.text = mCurrentPage.toString()
         }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
         mPreviewPresenter.detach()
-        PhotoManager.release()
     }
+
+    override fun updateCurrentPage(pos: Int) {
+        mTvCurrent.text = pos.toString()
+    }
+
+    override fun updateToggleButtonState(checked: Boolean) {
+        mTogglePick.isChecked = checked
+    }
+
 }
