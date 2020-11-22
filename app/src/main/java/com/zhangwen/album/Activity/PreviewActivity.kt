@@ -74,10 +74,16 @@ class PreviewActivity : AppCompatActivity(), PreviewView {
             //从预览按钮跳转，viewpager数据集设为PhotoManger.photoSelectedList
             mTvTotal.text = PhotoManager.photoSelectedList.size().toString()
             mTvCurrent.text = "1"
+            mTogglePick.isChecked = true
         } else {
             //从照片跳转，viewpager数据集设为全部照片
             mTvTotal.text = PhotoManager.photoList.size.toString()
             mTvCurrent.text = mCurrentPage.toString()
+            mCurrentPage?.let {
+                if (PhotoManager.photoList[it].index != -1)
+                    mTogglePick.isChecked = true
+            }
+
         }
     }
 

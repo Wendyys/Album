@@ -108,13 +108,13 @@
 
             <androidx.appcompat.widget.AppCompatToggleButton
                 android:id="@+id/togglebtn_choose"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:background="@drawable/pick_button_bg"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:textColor="#ffffff"
                 android:textOff=""
-                android:textOn="" />
+                android:textOn="√" />
 
             <TextView
                 android:id="@+id/btn_pick"
