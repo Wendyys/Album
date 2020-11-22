@@ -66,6 +66,9 @@ class PreviewActivity : AppCompatActivity(), PreviewView {
         mViewPager.adapter = mPreviewPagerAdapter
         mCurrentPage?.let { mViewPager.setCurrentItem(it, true) }
         mPreviewPresenter.attach(this)
+        mBtnBack.setOnClickListener{
+            finish()
+        }
 
     }
 
