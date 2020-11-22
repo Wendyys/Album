@@ -56,7 +56,9 @@ class MainActivity : AlbumView, AppCompatActivity() {
         mPreview = findViewById(R.id.tv_preview)
         mPreview.alpha = Constants.DISABLE_ALPHA
         mPreview.setOnClickListener(View.OnClickListener {
-            mAlbumPresenter.jump2preview(this, Constants.SOURCE_PREVIEW_BUTTON, null)
+            if (PhotoManager.photoSelectedList.size() != 0) {
+                mAlbumPresenter.jump2preview(this, Constants.SOURCE_PREVIEW_BUTTON, null)
+            }
         })
     }
 
@@ -92,6 +94,7 @@ class MainActivity : AlbumView, AppCompatActivity() {
     }
 
     override fun updateAlbumPhoto() {
+        //mAlbumAdapter.notifyDataSetChanged()
         mAlbumAdapter.notifyItemRangeChanged(0, 1, Constants.PAYLOAD_TOGGLE)
 
     }

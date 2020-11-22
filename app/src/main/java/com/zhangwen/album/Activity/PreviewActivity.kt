@@ -60,13 +60,13 @@ class PreviewActivity : AppCompatActivity(), PreviewView {
             mPreviewPresenter =
                 PreviewPresenter(this, PhotoManager.photoSelectedList.getAll(), mViewPager, SOURCE)
         } else {
-            mPreviewPagerAdapter = PreviewPagerAdapter(this, PhotoManager.photoList, SOURCE)
+            mPreviewPagerAdapter = PreviewPagerAdapter(this, PhotoManager.getAllPhotoList(), SOURCE)
             mPreviewPresenter = PreviewPresenter(this, PhotoManager.photoList, mViewPager, SOURCE)
         }
         mViewPager.adapter = mPreviewPagerAdapter
         mCurrentPage?.let { mViewPager.setCurrentItem(it, true) }
         mPreviewPresenter.attach(this)
-        mBtnBack.setOnClickListener{
+        mBtnBack.setOnClickListener {
             finish()
         }
 

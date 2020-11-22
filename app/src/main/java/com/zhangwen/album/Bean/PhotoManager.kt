@@ -13,4 +13,10 @@ object PhotoManager {
         photoList.clear()
         photoSelectedList.clear()
     }
+
+    fun getAllPhotoList(): ArrayList<PhotoBean> {
+        var all = ArrayList<PhotoBean>()
+        all.addAll(photoList)
+        return all
+    }
 }
