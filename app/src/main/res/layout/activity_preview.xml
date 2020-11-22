@@ -113,7 +113,6 @@
                 android:layout_height="20dp"
                 android:background="@drawable/pick_button_bg"
                 android:gravity="center"
-                android:clickable="false"
                 android:textColor="#ffffff"
                 android:textOff=""
                 android:textOn="√" />

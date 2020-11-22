@@ -69,6 +69,9 @@ class PreviewActivity : AppCompatActivity(), PreviewView {
         mBtnBack.setOnClickListener {
             finish()
         }
+        mTogglePick.setOnClickListener {
+            mPreviewPresenter.updatePhotoListState(mTogglePick.isChecked, SOURCE)
+        }
 
     }
 
@@ -81,7 +84,7 @@ class PreviewActivity : AppCompatActivity(), PreviewView {
         } else {
             //从照片跳转，viewpager数据集设为全部照片
             mTvTotal.text = PhotoManager.photoList.size.toString()
-            mTvCurrent.text = mCurrentPage.toString()
+            mTvCurrent.text = mCurrentPage?.plus(1).toString()
             mCurrentPage?.let {
                 if (PhotoManager.photoList[it].index != -1)
                     mTogglePick.isChecked = true

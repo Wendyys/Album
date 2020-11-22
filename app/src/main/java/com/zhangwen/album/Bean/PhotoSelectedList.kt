@@ -8,6 +8,7 @@ object PhotoSelectedList {
 
     fun add(photoBean: PhotoBean) {
         selectedList.add(photoBean)
+        //updateMapAndSync()
     }
 
     fun delete(photoBean: PhotoBean) {
@@ -18,9 +19,11 @@ object PhotoSelectedList {
             if (selectedList[i].position == photoBean.position
                 && selectedList[i].uri == photoBean.uri
             ) {
+                //将index改成-1
+                selectedList[i].index = -1
                 selectedList.removeAt(i)
-                //更新一下序号
-                updateMap()
+                //更新一下序号 & 同步状态
+                updateMapAndSync()
                 break;
             }
         }
@@ -44,13 +47,13 @@ object PhotoSelectedList {
         selectedList.clear()
     }
 
-    private fun updateMap() {
+    private fun updateMapAndSync() {
         //由于selectedList是个链表结构，因此将index重置为在当前列表中的顺序
         for (i in 0 until selectedList.size) {
             selectedList[i].index = i + 1
+            PhotoManager.photoList[selectedList[i].position].index = selectedList[i].index
         }
     }
-
     fun size(): Int {
         return selectedList.size
     }

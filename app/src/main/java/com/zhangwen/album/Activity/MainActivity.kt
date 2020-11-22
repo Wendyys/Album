@@ -118,13 +118,18 @@ class MainActivity : AlbumView, AppCompatActivity() {
 
     }
 
+    private fun updateView(){
+        updatePreviewNumber()
+        mAlbumAdapter.notifyDataSetChanged()
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d(TAG, "MainActivity.onResume")
+        //更新显示状态
+        updateView()
     }
 
     override fun onStop() {

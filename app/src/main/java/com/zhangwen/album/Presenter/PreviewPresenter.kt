@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.viewpager.widget.ViewPager
 import com.zhangwen.album.Bean.PhotoBean
+import com.zhangwen.album.Bean.PhotoManager
 import com.zhangwen.album.View.PreviewView
 
 class PreviewPresenter(
@@ -22,7 +23,6 @@ class PreviewPresenter(
             }
 
             override fun onPageSelected(position: Int) {
-                Log.d("PreviewPresenter", "onPageSelected")
                 //更新左上角页码
                 mView?.updateCurrentPage(position + 1)
                 updatePickState(position)
@@ -41,6 +41,16 @@ class PreviewPresenter(
             mView?.updateToggleButtonState(true)
         } else {
             mView?.updateToggleButtonState(false)
+        }
+    }
+
+    fun updatePhotoListState(checked: Boolean, source: String) {
+        if (checked) {
+            PhotoManager.photoSelectedList.add(mPhotoList[mViewPager.currentItem])
+            PhotoManager.photoList[mViewPager.currentItem].index = PhotoManager.photoSelectedList.size()
+        } else {
+            PhotoManager.photoSelectedList.delete(mPhotoList[mViewPager.currentItem])
+            PhotoManager.photoList[mPhotoList[mViewPager.currentItem].position].index = -1
         }
     }
 
