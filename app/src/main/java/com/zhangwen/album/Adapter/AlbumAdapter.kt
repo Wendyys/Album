@@ -39,13 +39,13 @@ class AlbumAdapter(
         }
         var imageIndex = mImageList[position].index
         if (imageIndex != -1) {
+            Log.d(TAG,"position:$position imageIndex: $imageIndex")
             holder.mPickButton.isChecked = true
             holder.mPickButton.text = imageIndex.toString()
         } else {
             holder.mPickButton.isChecked = false
             holder.mPickButton.text = ""
         }
-        Log.d(TAG,"position:$position imageIndex: $imageIndex")
 
     }
 
