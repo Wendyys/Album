@@ -70,6 +70,7 @@
                     android:background="@drawable/button_background"
                     android:gravity="center"
                     android:text="完成"
+                    android:visibility="gone"
                     android:textColor="#ffffff"
                     android:textSize="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -112,6 +113,7 @@
                 android:layout_height="20dp"
                 android:background="@drawable/pick_button_bg"
                 android:gravity="center"
+                android:clickable="false"
                 android:textColor="#ffffff"
                 android:textOff=""
                 android:textOn="√" />
