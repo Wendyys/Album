@@ -1,7 +1,6 @@
 package com.zhangwen.album.Presenter
 
 import android.content.Context
-import android.util.Log
 import androidx.viewpager.widget.ViewPager
 import com.zhangwen.album.Bean.PhotoBean
 import com.zhangwen.album.Bean.PhotoManager
@@ -42,12 +41,14 @@ class PreviewPresenter(
         } else {
             mView?.updateToggleButtonState(false)
         }
+        mView?.updateThumbListState(PhotoManager.photoSelectedList.size())
     }
 
     fun updatePhotoListState(checked: Boolean, source: String) {
         if (checked) {
             PhotoManager.photoSelectedList.add(mPhotoList[mViewPager.currentItem])
-            PhotoManager.photoList[mViewPager.currentItem].index = PhotoManager.photoSelectedList.size()
+            PhotoManager.photoList[mViewPager.currentItem].index =
+                PhotoManager.photoSelectedList.size()
         } else {
             PhotoManager.photoSelectedList.delete(mPhotoList[mViewPager.currentItem])
             PhotoManager.photoList[mPhotoList[mViewPager.currentItem].position].index = -1

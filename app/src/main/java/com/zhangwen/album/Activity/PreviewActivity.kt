@@ -94,6 +94,7 @@ class PreviewActivity : AppCompatActivity(), PreviewView {
         } else {
             mListThumb.visibility = View.INVISIBLE
         }
+        mListThumb.adapter = mThumbListAdapter
 
     }
 
@@ -135,6 +136,8 @@ class PreviewActivity : AppCompatActivity(), PreviewView {
         } else {
             mListThumb.visibility = View.INVISIBLE
         }
+        mThumbListAdapter.mList = PhotoManager.photoSelectedList.getAll()
+        mThumbListAdapter.notifyDataSetChanged()
     }
 
 }

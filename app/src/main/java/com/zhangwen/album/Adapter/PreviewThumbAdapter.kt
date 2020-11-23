@@ -15,7 +15,7 @@ import com.zhangwen.album.R
 //预览页面 略缩图list的adapter
 class PreviewThumbAdapter(
     private val mContext: Context,
-    private val mList: ArrayList<PhotoBean>,
+    var mList: ArrayList<PhotoBean>,
     private val onThumbItemClickListener: OnThumbItemClickListener
 ) :
     RecyclerView.Adapter<PreviewThumbAdapter.ThumbViewHolder>() {
@@ -28,7 +28,7 @@ class PreviewThumbAdapter(
     }
 
     override fun onBindViewHolder(holder: ThumbViewHolder, position: Int) {
-        val imageUri = mList[position]
+        val imageUri = mList[position].uri
         holder.imageView.setImageURI(Uri.parse("file://$imageUri"))
     }
 
@@ -37,8 +37,7 @@ class PreviewThumbAdapter(
     }
 
     inner class ThumbViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var bgView = itemView.findViewById<ImageView>(R.id.preview_thumb_bg)
-        var imageView = itemView.findViewById<SimpleDraweeView>(R.id.preview_thumb_item)
+        var imageView: SimpleDraweeView = itemView.findViewById<SimpleDraweeView>(R.id.preview_thumb_item)
 
         init {
             imageView.setOnClickListener(View.OnClickListener {
