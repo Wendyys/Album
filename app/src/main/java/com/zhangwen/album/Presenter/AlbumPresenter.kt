@@ -27,7 +27,7 @@ class AlbumPresenter(var context: Context, var imageList: ArrayList<PhotoBean>) 
                 var photoList = msg.obj as ArrayList<String>
                 if (photoList.size > 0) {
                     for (i in 0 until photoList.size) {
-                        var photoBean = PhotoBean(imageList.size + i, photoList[i], -1)
+                        var photoBean = PhotoBean(imageList.size, photoList[i], -1)
                         imageList.add(photoBean)
                     }
                     mView?.updateAlbumPhoto()
