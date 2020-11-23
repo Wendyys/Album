@@ -3,6 +3,7 @@ package com.zhangwen.album.Activity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +20,7 @@ import com.zhangwen.album.Utils.Constants
 import com.zhangwen.album.View.PreviewView
 
 class PreviewActivity : AppCompatActivity(), PreviewView {
-    private lateinit var mBtnBack: Button
+    private lateinit var mBtnBack: LinearLayout
     private lateinit var mTvCurrent: TextView
     private lateinit var mTvTotal: TextView
     private lateinit var mBtnFinish: Button
