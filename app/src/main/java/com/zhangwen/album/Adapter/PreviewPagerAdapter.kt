@@ -19,9 +19,9 @@ class PreviewPagerAdapter(var mContext: Context, var mList: ArrayList<PhotoBean>
 
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        var uri = mList[position].uri
-        var view = LayoutInflater.from(mContext).inflate(R.layout.viewpager_item, container, false)
-        var simpleDraweeView = view.findViewById<SimpleDraweeView>(R.id.preview_image_item)
+        val uri = mList[position].uri
+        val view = LayoutInflater.from(mContext).inflate(R.layout.viewpager_item, container, false)
+        val simpleDraweeView = view.findViewById<SimpleDraweeView>(R.id.preview_image_item)
         simpleDraweeView.setImageURI(Uri.parse("file://$uri"))
         container.addView(view)
         return view

@@ -14,7 +14,7 @@ object PhotoSelectedList {
     fun delete(photoBean: PhotoBean) {
         //不可直接调用remove方法，删除操作会失败，猜测remove方法在匹配时是比较对象的哈希值？
         //selectedList.remove(photoBean)
-        var size = selectedList.size
+        val size = selectedList.size
         for (i in 0 until size) {
             if (selectedList[i].position == photoBean.position
                 && selectedList[i].uri == photoBean.uri
@@ -35,8 +35,8 @@ object PhotoSelectedList {
     }
 
     fun getAll(): ArrayList<PhotoBean> {
-        var arr: ArrayList<PhotoBean> = ArrayList()
-        var size = selectedList.size
+        val arr: ArrayList<PhotoBean> = ArrayList()
+        val size = selectedList.size
         for (i in 0 until size) {
             arr.add(selectedList[i])
         }
@@ -54,6 +54,7 @@ object PhotoSelectedList {
             PhotoManager.photoList[selectedList[i].position].index = selectedList[i].index
         }
     }
+
     fun size(): Int {
         return selectedList.size
     }

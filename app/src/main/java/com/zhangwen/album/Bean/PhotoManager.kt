@@ -15,7 +15,7 @@ object PhotoManager {
     }
 
     fun getAllPhotoList(): ArrayList<PhotoBean> {
-        var all = ArrayList<PhotoBean>()
+        val all = ArrayList<PhotoBean>()
         all.addAll(photoList)
         return all
     }

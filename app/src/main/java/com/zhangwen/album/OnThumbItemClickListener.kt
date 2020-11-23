@@ -1,5 +1,5 @@
 package com.zhangwen.album
 
 interface OnThumbItemClickListener {
-    fun OnItemClickListener(adapterPosition: Int)
+    fun onItemClickListener(adapterPosition: Int)
 }

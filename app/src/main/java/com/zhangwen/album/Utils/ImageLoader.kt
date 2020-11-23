@@ -40,7 +40,7 @@ class ImageLoader(var contentResolver: ContentResolver, var mHandler: WeakHandle
                                 counter++
                                 //20条数据一更新，防止界面出现大片空白..
                                 if (counter == Constants.PHOTO_BATCH) {
-                                    var msg = Message()
+                                    val msg = Message()
                                     msg.what = 1
                                     msg.obj = imageUri
                                     mHandler.sendMessage(msg)
@@ -56,7 +56,7 @@ class ImageLoader(var contentResolver: ContentResolver, var mHandler: WeakHandle
                             cursor.close()
                     }
                 }
-                var msg = Message()
+                val msg = Message()
                 msg.what = 1
                 msg.obj = imageUri
                 mHandler.sendMessage(msg)
@@ -64,7 +64,6 @@ class ImageLoader(var contentResolver: ContentResolver, var mHandler: WeakHandle
             } catch (e: java.lang.Exception) {
                 return false
             }
-            return false
         }
     }
 

@@ -44,7 +44,7 @@ class PreviewActivity : AppCompatActivity(), PreviewView {
     }
 
     private fun getExtra() {
-        var bundle = intent.getBundleExtra(Constants.SOURCE)
+        val bundle = intent.getBundleExtra(Constants.SOURCE)
         if (bundle != null) {
             SOURCE = bundle.get(Constants.SOURCE) as String
             if (SOURCE == Constants.SOURCE_PREVIEW_PHOTO) {
@@ -98,7 +98,7 @@ class PreviewActivity : AppCompatActivity(), PreviewView {
         mListThumb.layoutManager = ms
         mThumbListAdapter = PreviewThumbAdapter(this, PhotoManager.photoSelectedList.getAll(),
             object : OnThumbItemClickListener {
-                override fun OnItemClickListener(adapterPosition: Int) {
+                override fun onItemClickListener(adapterPosition: Int) {
                     mPreviewPresenter.setViewPagerCurrentItem(
                         SOURCE,
                         mThumbListAdapter.mList[adapterPosition].position,

@@ -41,7 +41,7 @@ class PreviewThumbAdapter(
 
         init {
             imageView.setOnClickListener(View.OnClickListener {
-                onThumbItemClickListener?.OnItemClickListener(adapterPosition)
+                onThumbItemClickListener.onItemClickListener(adapterPosition)
             })
         }
     }

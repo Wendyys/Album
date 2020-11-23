@@ -29,17 +29,17 @@ class AlbumAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
         //使用payload属性防止toggle状态切换时图片刷新
         if (payloads.isEmpty()) {
-            var imageUri = mImageList[position].uri
-            var tag = holder.mImageView.tag
+            val imageUri = mImageList[position].uri
+            val tag = holder.mImageView.tag
             if (tag != imageUri) {
                 holder.mImageView.tag = imageUri
                 //一定要加上前面的schema 要不然图片不显示
                 holder.mImageView.setImageURI(Uri.parse("file://$imageUri"))
             }
         }
-        var imageIndex = mImageList[position].index
+        val imageIndex = mImageList[position].index
         if (imageIndex != -1) {
-            Log.d(TAG,"position:$position imageIndex: $imageIndex")
+            Log.d(TAG, "position:$position imageIndex: $imageIndex")
             holder.mPickButton.isChecked = true
             holder.mPickButton.text = imageIndex.toString()
         } else {

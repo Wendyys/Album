@@ -23,8 +23,7 @@ class WeakHandler(looper: Looper?, handler: IHandler?) :
 
     override fun handleMessage(msg: Message) {
         val handler = mRef.get()
-        if (handler != null && msg != null)
-            handler.handleMsg(msg)
+        handler?.handleMsg(msg)
     }
 
 }

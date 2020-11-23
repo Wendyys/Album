@@ -118,10 +118,11 @@ class MainActivity : AlbumView, AppCompatActivity() {
 
     }
 
-    private fun updateView(){
+    private fun updateView() {
         updatePreviewNumber()
         mAlbumAdapter.notifyDataSetChanged()
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
     }
