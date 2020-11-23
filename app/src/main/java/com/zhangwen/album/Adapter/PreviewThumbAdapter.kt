@@ -5,7 +5,6 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.zhangwen.album.Bean.PhotoBean
@@ -37,11 +36,12 @@ class PreviewThumbAdapter(
     }
 
     inner class ThumbViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var imageView: SimpleDraweeView = itemView.findViewById<SimpleDraweeView>(R.id.preview_thumb_item)
+        var imageView: SimpleDraweeView =
+            itemView.findViewById<SimpleDraweeView>(R.id.preview_thumb_item)
 
         init {
             imageView.setOnClickListener(View.OnClickListener {
-                onThumbItemClickListener?.OnItemClickListener()
+                onThumbItemClickListener?.OnItemClickListener(adapterPosition)
             })
         }
     }

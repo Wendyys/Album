@@ -65,10 +65,22 @@ class PreviewActivity : AppCompatActivity(), PreviewView {
             mPreviewPagerAdapter =
                 PreviewPagerAdapter(this, PhotoManager.photoSelectedList.getAll(), SOURCE)
             mPreviewPresenter =
-                PreviewPresenter(this, PhotoManager.photoSelectedList.getAll(), mViewPager, SOURCE)
+                PreviewPresenter(
+                    this,
+                    PhotoManager.photoSelectedList.getAll(),
+                    mViewPager,
+                    mPreviewPagerAdapter,
+                    SOURCE
+                )
         } else {
             mPreviewPagerAdapter = PreviewPagerAdapter(this, PhotoManager.getAllPhotoList(), SOURCE)
-            mPreviewPresenter = PreviewPresenter(this, PhotoManager.photoList, mViewPager, SOURCE)
+            mPreviewPresenter = PreviewPresenter(
+                this,
+                PhotoManager.photoList,
+                mViewPager,
+                mPreviewPagerAdapter,
+                SOURCE
+            )
         }
         mViewPager.adapter = mPreviewPagerAdapter
         mCurrentPage?.let { mViewPager.setCurrentItem(it, true) }
@@ -85,8 +97,12 @@ class PreviewActivity : AppCompatActivity(), PreviewView {
         mListThumb.layoutManager = ms
         mThumbListAdapter = PreviewThumbAdapter(this, PhotoManager.photoSelectedList.getAll(),
             object : OnThumbItemClickListener {
-                override fun OnItemClickListener() {
-
+                override fun OnItemClickListener(adapterPosition: Int) {
+                    mPreviewPresenter.setViewPagerCurrentItem(
+                        SOURCE,
+                        mThumbListAdapter.mList[adapterPosition].position,
+                        adapterPosition
+                    )
                 }
             })
         if (PhotoManager.photoSelectedList.size() > 0) {

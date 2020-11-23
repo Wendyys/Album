@@ -1,15 +1,19 @@
 package com.zhangwen.album.Presenter
 
 import android.content.Context
+import android.util.Log
 import androidx.viewpager.widget.ViewPager
+import com.zhangwen.album.Adapter.PreviewPagerAdapter
 import com.zhangwen.album.Bean.PhotoBean
 import com.zhangwen.album.Bean.PhotoManager
+import com.zhangwen.album.Utils.Constants
 import com.zhangwen.album.View.PreviewView
 
 class PreviewPresenter(
     var mContext: Context,
     var mPhotoList: ArrayList<PhotoBean>,
     var mViewPager: ViewPager,
+    var mViewPagerAdapter: PreviewPagerAdapter,
     var SOURCE: String
 ) : BasePresenter<PreviewView>() {
     init {
@@ -55,5 +59,21 @@ class PreviewPresenter(
         }
         mView?.updateThumbListState(PhotoManager.photoSelectedList.size())
     }
+
+    //点击图片跳转到viewpager指定页
+    fun setViewPagerCurrentItem(SOURCE: String, absolutePos: Int, relativePos: Int) {
+        Log.d("PreviewPresenter", "absolutePos:$absolutePos relativePos:$relativePos")
+        if (SOURCE == Constants.SOURCE_PREVIEW_BUTTON) {
+            for (i in 0 until mPhotoList.size) {
+                if (mPhotoList[i].position == absolutePos) {
+                    mViewPager.setCurrentItem(i, false)
+                    break;
+                }
+            }
+        } else {
+            mViewPager.setCurrentItem(absolutePos, false)
+        }
+    }
+
 
 }
