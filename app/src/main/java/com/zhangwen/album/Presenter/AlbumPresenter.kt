@@ -63,7 +63,6 @@ class AlbumPresenter(var context: Context, var imageList: ArrayList<PhotoBean>) 
     }
 
     override fun onToggleClick(view: View, pos: Int, uri: String, checked: Boolean) {
-       //var index = PhotoManager.photoSelectedList.size() + 1
         if (checked) {
             var index = PhotoManager.photoSelectedList.size() + 1
             var selected: PhotoBean = PhotoBean(pos, uri, index)

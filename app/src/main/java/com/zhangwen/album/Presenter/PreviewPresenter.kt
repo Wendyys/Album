@@ -47,7 +47,7 @@ class PreviewPresenter(
     fun updatePhotoListState(checked: Boolean, source: String) {
         if (checked) {
             PhotoManager.photoSelectedList.add(mPhotoList[mViewPager.currentItem])
-            PhotoManager.photoList[mViewPager.currentItem].index =
+            PhotoManager.photoList[mPhotoList[mViewPager.currentItem].position].index =
                 PhotoManager.photoSelectedList.size()
         } else {
             PhotoManager.photoSelectedList.delete(mPhotoList[mViewPager.currentItem])
