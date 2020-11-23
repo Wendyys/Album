@@ -52,6 +52,7 @@ class PreviewPresenter(
             PhotoManager.photoSelectedList.delete(mPhotoList[mViewPager.currentItem])
             PhotoManager.photoList[mPhotoList[mViewPager.currentItem].position].index = -1
         }
+        mView?.updateThumbListState(PhotoManager.photoSelectedList.size())
     }
 
 }

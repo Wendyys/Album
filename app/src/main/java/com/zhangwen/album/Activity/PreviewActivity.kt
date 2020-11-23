@@ -1,13 +1,18 @@
 package com.zhangwen.album.Activity
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.zhangwen.album.Adapter.PreviewPagerAdapter
+import com.zhangwen.album.Adapter.PreviewThumbAdapter
 import com.zhangwen.album.Bean.PhotoManager
+import com.zhangwen.album.OnThumbItemClickListener
 import com.zhangwen.album.Presenter.PreviewPresenter
 import com.zhangwen.album.R
 import com.zhangwen.album.Utils.Constants
@@ -23,11 +28,12 @@ class PreviewActivity : AppCompatActivity(), PreviewView {
     private lateinit var mPreviewPagerAdapter: PreviewPagerAdapter
     private lateinit var mTogglePick: ToggleButton
     private lateinit var mBtnPick: TextView
-
+    private lateinit var mListThumb: RecyclerView
     private lateinit var SOURCE: String
     private var mCurrentPage: Int? = null
     private var TAG = "PreviewActivity"
     private lateinit var mPreviewPresenter: PreviewPresenter
+    private lateinit var mThumbListAdapter: PreviewThumbAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_preview)
@@ -54,6 +60,7 @@ class PreviewActivity : AppCompatActivity(), PreviewView {
         mViewPager = findViewById(R.id.viewpager)
         mTogglePick = findViewById(R.id.togglebtn_choose)
         mBtnPick = findViewById(R.id.btn_pick)
+        mListThumb = findViewById(R.id.preview_list_thumb)
         if (SOURCE == Constants.SOURCE_PREVIEW_BUTTON) {
             mPreviewPagerAdapter =
                 PreviewPagerAdapter(this, PhotoManager.photoSelectedList.getAll(), SOURCE)
@@ -71,6 +78,21 @@ class PreviewActivity : AppCompatActivity(), PreviewView {
         }
         mTogglePick.setOnClickListener {
             mPreviewPresenter.updatePhotoListState(mTogglePick.isChecked, SOURCE)
+        }
+        //设置预览列表
+        val ms = LinearLayoutManager(this)
+        ms.orientation = LinearLayoutManager.HORIZONTAL
+        mListThumb.layoutManager = ms
+        mThumbListAdapter = PreviewThumbAdapter(this, PhotoManager.photoSelectedList.getAll(),
+            object : OnThumbItemClickListener {
+                override fun OnItemClickListener() {
+
+                }
+            })
+        if (PhotoManager.photoSelectedList.size() > 0) {
+            mListThumb.visibility = View.VISIBLE
+        } else {
+            mListThumb.visibility = View.INVISIBLE
         }
 
     }
@@ -105,6 +127,14 @@ class PreviewActivity : AppCompatActivity(), PreviewView {
 
     override fun updateToggleButtonState(checked: Boolean) {
         mTogglePick.isChecked = checked
+    }
+
+    override fun updateThumbListState(count: Int) {
+        if (count > 0) {
+            mListThumb.visibility = View.VISIBLE
+        } else {
+            mListThumb.visibility = View.INVISIBLE
+        }
     }
 
 }

@@ -36,6 +36,7 @@
                 android:text="1"
                 android:textColor="#ffffff"
                 android:textSize="20dp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -43,6 +44,7 @@
                 android:text="/"
                 android:textColor="#ffffff"
                 android:textSize="20dp" />
+
             <TextView
                 android:id="@+id/preview_total_number"
                 android:layout_width="wrap_content"
@@ -70,9 +72,9 @@
                     android:background="@drawable/button_background"
                     android:gravity="center"
                     android:text="完成"
-                    android:visibility="gone"
                     android:textColor="#ffffff"
                     android:textSize="15dp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -86,13 +88,29 @@
             android:layout_height="match_parent" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:visibility="invisible"
-        android:background="@color/colorPrimary"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/choose_listview_height"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/toolBarHeight" />
+        android:background="@android:color/transparent"
+        android:layout_marginBottom="@dimen/toolBarHeight"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/preview_list_thumb"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/choose_listview_height"
+            android:background="@color/colorPrimary"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/toolBarHeight"
+        android:background="@android:color/black" />
 
     <RelativeLayout
         android:layout_width="match_parent"

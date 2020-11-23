@@ -10,13 +10,13 @@ import android.widget.ToggleButton
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.zhangwen.album.Bean.PhotoBean
-import com.zhangwen.album.OnItemClickListener
+import com.zhangwen.album.OnPhotoItemClickListener
 import com.zhangwen.album.R
 
 class AlbumAdapter(
     private val mImageList: ArrayList<PhotoBean>,
     private val mContext: Context,
-    private val onItemClickListener: OnItemClickListener
+    private val onPhotoItemClickListener: OnPhotoItemClickListener
 ) :
     RecyclerView.Adapter<AlbumAdapter.ViewHolder>() {
     private val TAG: String = "Album"
@@ -60,14 +60,14 @@ class AlbumAdapter(
 
         init {
             mImageView.setOnClickListener(View.OnClickListener {
-                onItemClickListener?.onPhotoClick(
+                onPhotoItemClickListener?.onPhotoClick(
                     it,
                     adapterPosition,
                     mImageList[adapterPosition].uri
                 )
             })
             mPickButton.setOnClickListener(View.OnClickListener {
-                onItemClickListener?.onToggleClick(
+                onPhotoItemClickListener?.onToggleClick(
                     it,
                     adapterPosition,
                     mImageList[adapterPosition].uri,

@@ -3,4 +3,6 @@
     <color name="colorPrimary">#393939</color>
     <color name="buttonBg">#00C46F</color>
     <color name="buttonBgEmpty">#4C4C4C</color>
+    <color name="preview_thumb_choosed">#00C46F</color>
+    <color name="preview_thumb_unchoosed">#00000000</color>
 </resources>

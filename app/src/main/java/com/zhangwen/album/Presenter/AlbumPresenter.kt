@@ -11,7 +11,7 @@ import android.widget.ToggleButton
 import com.zhangwen.album.Activity.PreviewActivity
 import com.zhangwen.album.Bean.PhotoBean
 import com.zhangwen.album.Bean.PhotoManager
-import com.zhangwen.album.OnItemClickListener
+import com.zhangwen.album.OnPhotoItemClickListener
 import com.zhangwen.album.Utils.Constants
 import com.zhangwen.album.Utils.ImageLoader
 import com.zhangwen.album.Utils.WeakHandler
@@ -19,7 +19,7 @@ import com.zhangwen.album.View.AlbumView
 
 class AlbumPresenter(var context: Context, var imageList: ArrayList<PhotoBean>) :
     BasePresenter<AlbumView>(), WeakHandler.IHandler,
-    OnItemClickListener {
+    OnPhotoItemClickListener {
     private val handler: WeakHandler = WeakHandler(this)
     override fun handleMsg(msg: Message?) {
         when (msg?.what) {
