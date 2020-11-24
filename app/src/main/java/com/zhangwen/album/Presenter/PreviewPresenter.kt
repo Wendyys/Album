@@ -50,12 +50,13 @@ class PreviewPresenter(
 
     fun updatePhotoListState(checked: Boolean, source: String) {
         if (checked) {
-            PhotoManager.photoSelectedList.add(mPhotoList[mViewPager.currentItem])
-            PhotoManager.photoList[mPhotoList[mViewPager.currentItem].position].index =
-                PhotoManager.photoSelectedList.size()
+
+            PhotoManager.photoSelectedList.selectedList.add(mPhotoList[mViewPager.currentItem])
+            mPhotoList[mViewPager.currentItem].index = PhotoManager.photoSelectedList.size()
+
         } else {
             PhotoManager.photoSelectedList.delete(mPhotoList[mViewPager.currentItem])
-            PhotoManager.photoList[mPhotoList[mViewPager.currentItem].position].index = -1
+            mPhotoList[mViewPager.currentItem].index = -1
         }
         mView?.updateThumbListState(PhotoManager.photoSelectedList.size())
     }
